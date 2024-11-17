@@ -1,0 +1,28 @@
+﻿@model CommentModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (((IEnumerable<CommentModel>)ViewBag.comments).Any(comment => comment.EventId == Model.EventId))
+{
+    <h2>Comments</h2>
+    <div class="comment-container d-flex flex-column flex-grow-1 flex-shrink-1" style="max-height: 220px; overflow-y: auto; margin-bottom: 10px;">
+        @foreach (var comment in ((IEnumerable<CommentModel>)ViewBag.comments).OrderByDescending(x => x.PostedDate))
+        {
+            var user = await UserManager.FindByIdAsync(comment.CommentedBy);
+            var fullName = user.FullName;
+            @if (Model.EventId == comment.EventId)
+            {
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">@fullName</h5>
+                            <span class="text-muted">@comment.PostedDate</span>
+                        </div>
+                        <p class="card-text">@comment.Comment</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}

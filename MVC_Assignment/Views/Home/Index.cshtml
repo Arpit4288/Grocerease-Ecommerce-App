@@ -1,0 +1,66 @@
+﻿@model IEnumerable<MVC_Assignment.Models.BookReadingEventModel>
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <h3>Book Reading Event</h3>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="text-center">Past Events</h2>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <td>Date</td>
+                        <td>Event Title</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderBy(e => e.Date).ThenBy(e => e.StartTime))
+                    {
+                        @if (item.Date < DateTime.Now && item.Type == "Public")
+                        {
+                            <tr>
+                                <td>@item.Date</td>
+                                <td>
+                                    <a asp-controller="BookReadingEventModels" asp-action="Details" asp-route-id="@item.Id">@item.Title</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h2 class="text-center">Upcoming Events</h2>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <td>Date</td>
+                        <td>Event Title</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderBy(e => e.Date).ThenBy(e => e.StartTime))
+                    {
+                        @if (item.Date >= DateTime.Now && item.Type == "Public")
+                        {
+                            <tr>
+                                <td>@item.Date</td>
+                                <td>
+                                    <a asp-controller="BookReadingEventModels" asp-action="Details" asp-route-id="@item.Id">@item.Title</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

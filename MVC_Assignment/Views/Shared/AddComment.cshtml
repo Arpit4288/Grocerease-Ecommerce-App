@@ -1,0 +1,17 @@
+﻿@model MVC_Assignment.Models.CommentModel
+
+
+
+
+
+<div class="container">
+    <form asp-action="AddComment" asp-controller="BookReadingEventModels">
+        <input asp-for="EventId" type ="hidden"/>
+        <input asp-for="CommentedBy" type ="hidden" />
+        <div class="form-group">
+            <label for="comment">Comment:</label>
+            <input asp-for="Comment" class="form-control" id="comment" required/>
+        </div>
+        <button type="submit" class="btn btn-primary">Post Comment</button>
+    </form>
+</div>
